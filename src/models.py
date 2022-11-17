@@ -8,6 +8,15 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
+class User(Base):
+    __tablename__ = 'user'
+    # Here we define columns for the table user.
+    # Notice that each column is also a normal Python instance attribute.
+    user_id = Column(Integer, primary_key=True)
+    password = Column(String(256))
+
+    def to_dict(self):
+       return {}
 
 
 class Card(Base):
@@ -77,15 +86,7 @@ class Favorite (Base):
     parent2 = relationship ('Vehicle', back_populates = 'children2')
     parent3 = relationship ('Planet', back_populates = 'children3')
 
-class User(Base):
-    __tablename__ = 'user'
-    # Here we define columns for the table user.
-    # Notice that each column is also a normal Python instance attribute.
-    user_id = Column(Integer, primary_key=True)
-    password = Column(String(256))
 
-    def to_dict(self):
-       return {}
 
 ## Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
