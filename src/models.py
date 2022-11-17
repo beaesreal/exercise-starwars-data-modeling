@@ -66,7 +66,7 @@ class Favorite (Base):
     __tablename__= 'favorite'
     # Here we define columns for the table favorite.
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('user.id_user'))
     card_id = Column(Integer, ForeignKey('card.id'))
     # Store favorites.
     character_fav = Column(Integer,ForeignKey('character.id'))
@@ -81,8 +81,8 @@ class User(Base):
     __tablename__ = 'user'
     # Here we define columns for the table user.
     # Notice that each column is also a normal Python instance attribute.
-    id_user=Column(Integer, primary_key=True)
-    password=Column(String(256))
+    user_id = Column(Integer, primary_key=True)
+    password = Column(String(256))
 
     def to_dict(self):
        return {}
