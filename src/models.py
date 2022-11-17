@@ -32,7 +32,7 @@ class Character (Base):
     height = Column(String(50))
     skin_color = Column(String(50))
     eye_color = Column(String(50))
-    children1 = relationship ("Favorite",back_populates="parent1")
+    children1 = relationship ('Favorite', back_populates = 'parent1')
 
 class Vehicle (Base):
     __tablename__ = 'vehicle'
@@ -46,7 +46,7 @@ class Vehicle (Base):
     lenght = Column(String(50))
     cargo_capacity = Column(String(50))
     consumables = Column(String(50))
-    children2 = relationship ("Favorite",back_populates="parent2")
+    children2 = relationship ('Favorite', back_populates = 'parent2')
 
 class Planet (Base):
     __tablename__ = 'planet'
@@ -60,22 +60,22 @@ class Planet (Base):
     orbital_period = Column(String(50))
     rotation_period = Column(String(50))
     diameter = Column(String(50))
-    children3 = relationship ("Favorite",back_populates="parent3")
+    children3 = relationship ('Favorite', back_populates = 'parent3')
 
 class Favorite (Base):
     __tablename__= 'favorite'
     # Here we define columns for the table favorite.
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id_user'))
+    user_id = Column(Integer, ForeignKey('user.user_id'))
     card_id = Column(Integer, ForeignKey('card.id'))
     # Store favorites.
     character_fav = Column(Integer,ForeignKey('character.id'))
     planet_fav = Column(Integer,ForeignKey('planet.id'))
     vehicle_fav = Column(Integer,ForeignKey('vehicle.id'))
     # Save characters, vehicles and planets from children to parent.
-    parent1 = relationship ("Character",back_populates="children1")
-    parent2 = relationship ("Vehicle",back_populates="children2")
-    parent3 = relationship ("Planet",back_populates="children3")
+    parent1 = relationship ('Character', back_populates = 'children1')
+    parent2 = relationship ('Vehicle', back_populates = 'children2')
+    parent3 = relationship ('Planet', back_populates = 'children3')
 
 class User(Base):
     __tablename__ = 'user'
