@@ -24,9 +24,9 @@ class Card(Base):
     # Here we define columns for the table card.
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
-    name = Column(String(50))
-    image = Column(String(50))
-    description = Column(String(50))
+    name = Column(String(256))
+    image = Column(String(256))
+    description = Column(String(256))
     character = relationship('Character', backref='card')
 
 class Character (Base):
@@ -36,11 +36,11 @@ class Character (Base):
     name = Column(Integer, ForeignKey('card.name'))
     image = Column(Integer, ForeignKey('card.image'))
     description = Column(Integer, ForeignKey('card.description'))
-    birth_date = Column(String(50))
-    gender = Column(String(50))
-    height = Column(String(50))
-    skin_color = Column(String(50))
-    eye_color = Column(String(50))
+    birth_date = Column(String(256))
+    gender = Column(String(256))
+    height = Column(String(256))
+    skin_color = Column(String(256))
+    eye_color = Column(String(256))
     children1 = relationship ('Favorite', back_populates = 'parent1')
 
 class Vehicle (Base):
@@ -50,11 +50,11 @@ class Vehicle (Base):
     name = Column(Integer, ForeignKey('card.name'))
     image = Column(Integer, ForeignKey('card.image'))
     description = Column(Integer, ForeignKey('card.description'))
-    model = Column(String(50))
-    passengers = Column(String(50))
-    lenght = Column(String(50))
-    cargo_capacity = Column(String(50))
-    consumables = Column(String(50))
+    model = Column(String(256))
+    passengers = Column(String(256))
+    lenght = Column(String(256))
+    cargo_capacity = Column(Integer)
+    consumables = Column(String(256))
     children2 = relationship ('Favorite', back_populates = 'parent2')
 
 class Planet (Base):
@@ -64,11 +64,11 @@ class Planet (Base):
     name = Column(Integer, ForeignKey('card.name'))
     image = Column(Integer, ForeignKey('card.image'))
     description = Column(Integer, ForeignKey('card.description'))
-    climate = Column(String(50))
-    population = Column(String(50))
-    orbital_period = Column(String(50))
-    rotation_period = Column(String(50))
-    diameter = Column(String(50))
+    climate = Column(String(256))
+    population = Column(Integer)
+    orbital_period = Column(String(256))
+    rotation_period = Column(String(256))
+    diameter = Column(String(256))
     children3 = relationship ('Favorite', back_populates = 'parent3')
 
 class Favorite (Base):
