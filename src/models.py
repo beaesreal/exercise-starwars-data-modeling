@@ -1,10 +1,11 @@
 import os
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Enum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 from eralchemy2 import render_er
+import enum
 
 
 Base = declarative_base()
@@ -14,7 +15,7 @@ class User (Base):
     __tablename__ = 'user'
 
     #columns
-    id = Column(Integer, primary_key=True)
+    id = Column (Integer, primary_key=True)
     password = Column(String(256))
     user_name = Column (String(20), nullable=False)
     nick_name = Column (String(20), nullable=False)
@@ -33,19 +34,34 @@ class Follower (Base):
     __tablename__ = 'follower'
 
     #columns
-    user_from_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
-    user_to_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    user_from_id = Column (Integer, ForeignKey('user.id'), primary_key=True)
+    user_to_id = Column (Integer, ForeignKey('user.id'), primary_key=True)
 
     #relationships
-    user = relationship('User', backref='user')
+    user = relationship ('User', backref='user')
+
+
+#define Enum
+class Media_enum(enum.Enum):
+    image = "image"
+    video = "video"
+
+
+class Media (Base):
+    __tablename__ = 'media'
+    id = Column (Integer, primary_key=True)
+    type = Column (Enum(Media_enum))
+    url = Column (String)
+    post_id = Column(Integer, ForeignKey('user.id'))
+    post = relationship ('Post', backref='post')
 
 
 class Post (Base):
     __tablename__ = 'post'
 
     #columns
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    id = Column (Integer, primary_key=True)
+    user_id = Column (Integer, ForeignKey('user.id'))
     image_url = Column (String(), nullable=False)
     date_published = Column (DateTime(), nullable=False)
     content = Column (String (2200))
