@@ -19,8 +19,8 @@ class User(Base):
        return {}
 
 
-class Card(Base):
-    __tablename__ = 'card'
+class Post(Base):
+    __tablename__ = 'post'
     # Here we define columns for the table card.
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
