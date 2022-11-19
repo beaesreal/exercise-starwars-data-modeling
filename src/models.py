@@ -6,16 +6,20 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 from eralchemy2 import render_er
 
+
 Base = declarative_base()
 
-class User(Base):
+
+class User (Base):
     __tablename__ = 'user'
 
+    #columns
     id = Column(Integer, primary_key=True)
     password = Column(String(256))
     user_name = Column (String(20), nullable=False)
     nick_name = Column (String(20), nullable=False)
 
+    #relationships
     post= relationship ('Post', backref='user')
     comments = relationship ('Comment', backref='user')
     comment_likes = relationship ('CommentLike', backref='user')
@@ -25,37 +29,59 @@ class User(Base):
        return {}
 
 
-class Post(Base):
+class Follower (Base):
+    __tablename__ = 'follower'
+
+    #columns
+    user_from_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    user_to_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+
+    #relationships
+    user = relationship('User', backref='user')
+
+
+class Post (Base):
     __tablename__ = 'post'
 
+    #columns
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     image_url = Column (String(), nullable=False)
     date_published = Column (DateTime(), nullable=False)
     content = Column (String (2200))
 
+    #relationships
     likes = relationship ('PostLike', backref='post')
     comments = relationship ('Comment', backref='post')
+
 
 class Comment (Base):
     __tablename__ = 'comment'
 
+    #columns
     id = Column(Integer, primary_key=True)
     post_id = Column (Integer, ForeignKey ('post.id'))
     user_id = Column (Integer, ForeignKey ('user.id'))
     content = Column (String (300), nullable=False)
     date_publisher = Column (DateTime(), nullable=False)
 
+    #relationships
     likes = relationship ('CommentLike', backref='comment')
+
 
 class PostLike (Base):
     __tablename__ = 'post_like'
+
+    #columns
     id = Column(Integer, primary_key=True)
     post_id = Column (Integer, ForeignKey ('post.id'))
     user_id = Column (Integer, ForeignKey ('user.id'))
 
+
 class CommentLike (Base):
     __tablename__ = 'comment_like'
+
+    #columns
     id = Column(Integer, primary_key=True)
     post_id = Column (Integer, ForeignKey ('post.id'))
     user_id = Column (Integer, ForeignKey ('user.id'))
