@@ -53,6 +53,8 @@ class Media (Base):
     type = Column (Enum(Media_enum))
     url = Column (String)
     post_id = Column(Integer, ForeignKey('user.id'))
+
+    #relationships
     post = relationship ('Post', backref='post')
 
 
