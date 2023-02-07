@@ -52,9 +52,12 @@ class Media (Base):
     id = Column (Integer, primary_key=True)
     type = Column (Enum(Media_enum))
     url = Column (String)
-    post_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('user.id'))
+    post_id = Column(Integer, ForeignKey('post.id'))
+
 
     #relationships
+    user = relationship ('User', backref='user')
     post = relationship ('Post', backref='post')
 
 
@@ -103,6 +106,12 @@ class CommentLike (Base):
     id = Column(Integer, primary_key=True)
     post_id = Column (Integer, ForeignKey ('post.id'))
     user_id = Column (Integer, ForeignKey ('user.id'))
+    comment_id = Column (Integer, ForeignKey ('comment.id'))
+
+    #relationships
+    post = relationship ('Post', backref='post')
+    user = relationship ('User', backref='user')
+    comment = relationship ('Comment', backref='comment')
 
 
 ## Draw from SQLAlchemy base
